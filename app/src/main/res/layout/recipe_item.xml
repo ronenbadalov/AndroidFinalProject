@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:layout_margin="4dp"
+    android:elevation="8dp"
+    app:cardElevation="8dp">
+    <RelativeLayout
+        android:id="@+id/score_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/recipe_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="https://images-gmi-pmc.edge-generalmills.com/e59f255c-7498-4b84-9c9d-e578bf5d88fc.jpg"
+            app:shapeAppearanceOverlay="@drawable/circle_background"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/score_item_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@id/recipe_image"
+            android:text="800 Points"
+            android:fontFamily="@font/sora"
+            android:letterSpacing="0.1"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
