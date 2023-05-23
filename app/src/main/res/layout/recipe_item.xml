@@ -13,15 +13,12 @@
         android:id="@+id/score_item_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp">
-
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/recipe_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
-            android:background="@color/blue"
             android:layout_centerVertical="true"
-            android:src="https://images-gmi-pmc.edge-generalmills.com/e59f255c-7498-4b84-9c9d-e578bf5d88fc.jpg"
             app:shapeAppearanceOverlay="@drawable/circle_background"
             />
         <RelativeLayout
