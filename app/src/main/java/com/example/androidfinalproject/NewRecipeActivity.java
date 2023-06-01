@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,6 +64,7 @@ public class NewRecipeActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("ADDED", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        moveBackToMyRecipes();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -71,6 +73,12 @@ public class NewRecipeActivity extends AppCompatActivity {
                         Log.w("FAILED", "Error adding document", e);
                     }
                 });
+    }
+
+    private void moveBackToMyRecipes(){
+        Intent intent = new Intent(this,MyRecipesActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void findViews() {

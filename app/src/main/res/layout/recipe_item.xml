@@ -10,13 +10,13 @@
     app:cardCornerRadius="5dp"
     >
     <RelativeLayout
-        android:id="@+id/score_item_layout"
+        android:id="@+id/recipe_item_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="70dp">
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/recipe_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:layout_centerVertical="true"
             app:shapeAppearanceOverlay="@drawable/circle_background"
@@ -36,7 +36,7 @@
             android:text="Chicken Burritos"
             android:fontFamily="@font/sora"
             android:letterSpacing="0.1"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textColor="@color/black"
             android:layout_marginTop="7dp"
             android:textStyle="bold" />
@@ -50,8 +50,8 @@
                     >
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/clock_img"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     app:srcCompat="@drawable/clock" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -63,7 +63,7 @@
                         android:letterSpacing="0.1"
                         android:text="9 mins"
                         android:textColor="@color/gray"
-                        android:textSize="10sp"/>
+                        android:textSize="14sp"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/seperator"
@@ -74,7 +74,7 @@
                         android:letterSpacing="0.1"
                         android:text="•"
                         android:textColor="@color/gray"
-                        android:textSize="10sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/date"
@@ -85,7 +85,7 @@
                         android:letterSpacing="0.1"
                         android:text="18.05.2023"
                         android:textColor="@color/gray"
-                        android:textSize="10sp"/>
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
             </RelativeLayout>
