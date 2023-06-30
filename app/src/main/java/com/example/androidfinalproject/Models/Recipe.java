@@ -9,6 +9,7 @@ public class Recipe {
     private String imagePath = "";
     private String timestamp = "";
     private String userId = "";
+    private String createdAt= "";
 
 
     public Recipe() {
@@ -77,7 +78,13 @@ public class Recipe {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
     @Override
     public String toString() {
         return "Recipe{" +
@@ -88,6 +95,7 @@ public class Recipe {
                 ", preparationSteps='" + preparationSteps + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 ", timestamp='" + timestamp + '\'' +
+                ", createdAt='" + createdAt + '\'' +
                 '}';
     }
 }

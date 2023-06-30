@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
@@ -54,6 +55,12 @@ public class ListFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             ArrayList<HashMap<String, Object>> documents = new ArrayList<>();
+                            Collections.sort(documents, new Comparator<HashMap<String, Object>>() {
+                                @Override
+                                public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
+                                    return o1.get("createdAt").toString().compareTo(o2.get("createdAt").toString());
+                                }
+                            });
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Recipe recipe = new Recipe();
                                 recipe.setUserId(document.get("userId").toString());

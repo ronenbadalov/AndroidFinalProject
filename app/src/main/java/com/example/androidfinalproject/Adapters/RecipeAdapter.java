@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.androidfinalproject.Models.Recipe;
 import com.example.androidfinalproject.R;
 import com.google.android.material.textview.MaterialTextView;
@@ -39,6 +41,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.recipe_name.setText((recipe.getName()));
         holder.preperation_time.setText(recipe.getCookingTime() + " mins");
         holder.date.setText(recipe.getTimestamp());
+        Glide.with(context).load(recipe.getImagePath()).circleCrop().into(holder.image);
     }
 
     @Override
@@ -55,6 +58,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         private MaterialTextView preperation_time;
         private MaterialTextView date;
         private RelativeLayout recipe_item_layout;
+        private ImageView image;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,7 +66,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             preperation_time = itemView.findViewById(R.id.preperation_time);
             date = itemView.findViewById(R.id.date);
             recipe_item_layout = itemView.findViewById(R.id.recipe_item_layout);
-
+            image = itemView.findViewById(R.id.recipe_image);
         }
     }
 }
