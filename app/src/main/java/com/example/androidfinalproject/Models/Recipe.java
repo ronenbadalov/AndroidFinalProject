@@ -98,4 +98,46 @@ public class Recipe {
                 ", createdAt='" + createdAt + '\'' +
                 '}';
     }
+
+    public void toRecipe(String recipeString){
+        String tempString = recipeString;
+        tempString = tempString.replace("Recipe{", "");
+        tempString = tempString.replace("}", "");
+        tempString = tempString.replace("'", "");
+
+        // Split the string into parts
+        String[] parts = tempString.split(", ");
+
+        // Set each field using the parts
+        for (String part : parts) {
+            String[] keyValue = part.split("=");
+
+            switch (keyValue[0]) {
+                case "name":
+                    this.setName(keyValue[1]);
+                    break;
+                case "cookingTime":
+                    this.setCookingTime(Integer.parseInt(keyValue[1]));
+                    break;
+                case "servings":
+                    this.setServings(Integer.parseInt(keyValue[1]));
+                    break;
+                case "ingredients":
+                    this.setIngredients(keyValue[1]);
+                    break;
+                case "preparationSteps":
+                    this.setPreparationSteps(keyValue[1]);
+                    break;
+                case "imagePath":
+                    this.setImagePath(keyValue[1]);
+                    break;
+                case "timestamp":
+                    this.setTimestamp(keyValue[1]);
+                    break;
+                case "createdAt":
+                    this.setCreatedAt(keyValue[1]);
+                    break;
+            }
+        }
+    }
 }

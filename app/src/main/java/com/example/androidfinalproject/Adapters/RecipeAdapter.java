@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.androidfinalproject.Interfaces.RecipeCallback;
 import com.example.androidfinalproject.Models.Recipe;
 import com.example.androidfinalproject.R;
 import com.google.android.material.textview.MaterialTextView;
@@ -21,10 +22,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     private Context context;
     private ArrayList<Recipe> recipes;
+    private RecipeCallback recipeCallback;
 
-    public RecipeAdapter(Context context, ArrayList<Recipe> recipes) {
+    public RecipeAdapter(Context context, ArrayList<Recipe> recipes, RecipeCallback recipeCallback) {
         this.context = context;
         this.recipes = recipes;
+        this.recipeCallback = recipeCallback;
     }
 
     @NonNull
@@ -42,6 +45,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.preperation_time.setText(recipe.getCookingTime() + " mins");
         holder.date.setText(recipe.getTimestamp());
         Glide.with(context).load(recipe.getImagePath()).circleCrop().into(holder.image);
+        holder.recipe_item_layout.setOnClickListener(v -> {
+            recipeCallback.onRecipeClick(recipe);
+        });
     }
 
     @Override

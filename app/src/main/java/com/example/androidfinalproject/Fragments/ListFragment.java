@@ -1,5 +1,6 @@
 package com.example.androidfinalproject.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,10 @@ import androidx.fragment.app.Fragment;
         import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidfinalproject.Adapters.RecipeAdapter;
+import com.example.androidfinalproject.Interfaces.RecipeCallback;
 import com.example.androidfinalproject.Models.Recipe;
 import com.example.androidfinalproject.R;
+import com.example.androidfinalproject.ViewRecipeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,10 +74,11 @@ public class ListFragment extends Fragment {
                                 recipe.setPreparationSteps(document.get("preparationSteps").toString());
                                 recipe.setServings(Integer.parseInt(document.get("servings").toString()));
                                 recipe.setCookingTime(Integer.parseInt(document.get("cookingTime").toString()));
+                                recipe.setCreatedAt(document.get("createdAt").toString());
                                 recipeArrayList.add(recipe);
                                 Log.d("TAG", document.getId() + " => " + document.getData());
                             }
-                            recipeAdapter = new RecipeAdapter(getActivity(),recipeArrayList);
+                            recipeAdapter = new RecipeAdapter(getActivity(),recipeArrayList,clickScoreItemCallback);
                             list_LST_recipes.setAdapter(recipeAdapter);
 
                         } else {
@@ -86,6 +90,15 @@ public class ListFragment extends Fragment {
 
     }
 
+    RecipeCallback clickScoreItemCallback = new RecipeCallback() {
+
+        @Override
+        public void onRecipeClick(Recipe recipe) {
+            Intent intent = new Intent(getActivity(), ViewRecipeActivity.class);
+            intent.putExtra("RECIPE_DATA", recipe.toString());
+            startActivity(intent);
+        }
+    };
 
     private void findViews(View view) {
         list_LST_recipes = view.findViewById(R.id.list_LST_recipes);
