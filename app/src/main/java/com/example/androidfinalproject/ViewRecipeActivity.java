@@ -69,7 +69,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-//        main_LBL_title.setText(intent.getStringExtra("username"));
         nameEditText.setText(this.recipe.getName());
         cookingTimeEditText.setText(String.valueOf(this.recipe.getCookingTime()));
         servingsEditText.setText(String.valueOf(this.recipe.getServings()));
