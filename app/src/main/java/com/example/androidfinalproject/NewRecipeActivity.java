@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -127,7 +126,7 @@ public class NewRecipeActivity extends AppCompatActivity {
             }
         }
     }
-    private void saveRecipe(String imageUrl){
+    private void saveRecipe(String imageUrl,String imageName){
 
         Recipe recipe = new Recipe();
         recipe.setName(nameEditText.getText().toString());
@@ -138,6 +137,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         recipe.setTimestamp(dateFormat.format(new Date()));
         recipe.setUserId(firebaseAuth.getUid());
         recipe.setImagePath(imageUrl);
+        recipe.setImageName(imageName);
         recipe.setCreatedAt(createdAtFormat.format(new Date()));
 
         // Add a new document with a generated ID
@@ -164,8 +164,11 @@ public class NewRecipeActivity extends AppCompatActivity {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
 
+            String imageName = firebaseAuth.getUid()+"-" +createdAtFormat.format(new Date())+".jpg";
+
+
             StorageReference storageRef = storage.getReference();
-            StorageReference imagesRef = storageRef.child("images/"+firebaseAuth.getUid()+"-" +createdAtFormat.format(new Date())+".jpg");
+            StorageReference imagesRef = storageRef.child("images/"+imageName);
 
             UploadTask uploadTask = imagesRef.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -180,7 +183,7 @@ public class NewRecipeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String imageURL = uri.toString();
-                            saveRecipe(imageURL);
+                            saveRecipe(imageURL,imageName);
                         }
                     });
                 }

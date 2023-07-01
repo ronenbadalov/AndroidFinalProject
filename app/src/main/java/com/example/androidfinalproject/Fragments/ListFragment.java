@@ -21,14 +21,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.gson.Gson;
 
         import java.util.ArrayList;
-        import java.util.Collections;
-        import java.util.Comparator;
 import java.util.HashMap;
 
 public class ListFragment extends Fragment {
@@ -51,24 +47,20 @@ public class ListFragment extends Fragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         list_LST_recipes.setLayoutManager(linearLayoutManager);
         db.collection("recipes")
-                .whereEqualTo("userId", firebaseAuth.getUid())
+                .whereEqualTo("userId", firebaseAuth.getUid()).orderBy("createdAt")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             ArrayList<HashMap<String, Object>> documents = new ArrayList<>();
-                            Collections.sort(documents, new Comparator<HashMap<String, Object>>() {
-                                @Override
-                                public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
-                                    return o1.get("createdAt").toString().compareTo(o2.get("createdAt").toString());
-                                }
-                            });
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Recipe recipe = new Recipe();
+                                recipe.setId(document.getId());
                                 recipe.setUserId(document.get("userId").toString());
                                 recipe.setName(document.get("name").toString());
                                 recipe.setImagePath(document.get("imagePath").toString());
+                                recipe.setImageName(document.get("imageName").toString());
                                 recipe.setTimestamp(document.get("timestamp").toString());
                                 recipe.setIngredients(document.get("ingredients").toString());
                                 recipe.setPreparationSteps(document.get("preparationSteps").toString());
@@ -82,7 +74,7 @@ public class ListFragment extends Fragment {
                             list_LST_recipes.setAdapter(recipeAdapter);
 
                         } else {
-                            Log.w("TAG", "Error getting documents.", task.getException());
+                            Log.e("TAG", task.getException().getLocalizedMessage());
                         }
                     }
                 });
@@ -96,6 +88,7 @@ public class ListFragment extends Fragment {
         public void onRecipeClick(Recipe recipe) {
             Intent intent = new Intent(getActivity(), ViewRecipeActivity.class);
             intent.putExtra("RECIPE_DATA", recipe.toString());
+            intent.putExtra("RECIPE_ID", recipe.getId().toString());
             startActivity(intent);
         }
     };

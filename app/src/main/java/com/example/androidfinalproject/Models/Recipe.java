@@ -1,18 +1,27 @@
 package com.example.androidfinalproject.Models;
 
 public class Recipe {
+    private String id ="";
     private String name = "";
     private int cookingTime = 0;
     private int servings = 0;
     private String ingredients = "";
     private String preparationSteps = "";
     private String imagePath = "";
+    private String imageName="";
     private String timestamp = "";
     private String userId = "";
     private String createdAt= "";
 
-
     public Recipe() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -62,7 +71,13 @@ public class Recipe {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+    public String getImageName() {
+        return imageName;
+    }
 
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
     public String getTimestamp() {
         return timestamp;
     }
@@ -94,6 +109,7 @@ public class Recipe {
                 ", ingredients='" + ingredients  + '\'' +
                 ", preparationSteps='" + preparationSteps + '\'' +
                 ", imagePath='" + imagePath + '\'' +
+                ", imageName='" + imageName + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 '}';
@@ -129,7 +145,10 @@ public class Recipe {
                     this.setPreparationSteps(keyValue[1]);
                     break;
                 case "imagePath":
-                    this.setImagePath(keyValue[1]);
+                    this.setImagePath(keyValue[1]+"="+keyValue[2]+"="+keyValue[3]);
+                    break;
+                case "imageName":
+                    this.setImageName(keyValue[1]);
                     break;
                 case "timestamp":
                     this.setTimestamp(keyValue[1]);

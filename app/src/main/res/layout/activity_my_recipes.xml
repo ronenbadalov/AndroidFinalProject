@@ -41,7 +41,7 @@
         android:id="@+id/greet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello X, you have 3 recipes"
+        android:text="Hello X!"
         android:fontFamily="@font/sora"
         android:letterSpacing="0.1"
         android:textSize="18sp"

@@ -1,23 +1,9 @@
 package com.example.androidfinalproject;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -26,19 +12,10 @@ import com.example.androidfinalproject.Models.Recipe;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
 
-import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import android.view.View;
-import android.widget.Toast;
 
 public class ViewRecipeActivity extends AppCompatActivity {
     private AppCompatEditText nameEditText;
@@ -50,8 +27,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ImageView imageView;
     private FirebaseStorage storage;
-    private FirebaseAuth firebaseAuth;
     private Recipe recipe;
+    private String recipeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +36,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_recipe);
         Intent intent = getIntent();
         String recipe_string = intent.getStringExtra("RECIPE_DATA");
+        this.recipeId = intent.getStringExtra("RECIPE_ID");
+
         this.recipe = new Recipe();
         this.recipe.toRecipe(recipe_string);
         findViews();
         initViews();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-        firebaseAuth  = FirebaseAuth.getInstance();
     }
 
     private void initViews() {
@@ -74,9 +52,10 @@ public class ViewRecipeActivity extends AppCompatActivity {
         servingsEditText.setText(String.valueOf(this.recipe.getServings()));
         ingredientsEditText.setText(this.recipe.getIngredients());
         stepsEditText.setText(this.recipe.getPreparationSteps());
-        Glide.with(this).load(recipe.getImagePath()).into(imageView);
+        Glide.with(this).load(this.recipe.getImagePath()).placeholder(R.drawable.camera_placeholder).dontAnimate().into(imageView);
         deleteButton.setOnClickListener(v -> {
-
+            deleteRecipe();
+            moveBackToMyRecipes();
         });
     }
 
@@ -93,7 +72,36 @@ public class ViewRecipeActivity extends AppCompatActivity {
         ingredientsEditText = findViewById(R.id.viewRecipe_ingredientsEditText);
         stepsEditText = findViewById(R.id.viewRecipe_stepsEditText);
         deleteButton = findViewById(R.id.deleteButton);
-        imageView = findViewById(R.id.viewRecipe_imageView);
+        imageView = findViewById(R.id.view_recipe_image);
+    }
+
+    private void deleteRecipe(){
+        db.collection("recipes").document(recipeId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("Tag", "DocumentSnapshot successfully deleted!");
+
+                // If the document delete is successful, delete the image from Firebase Storage
+                StorageReference imageRef = storage.getReference().child("images/"+recipe.getImageName());
+
+                imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Tag", "Image successfully deleted!");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Tag", "Error deleting image", e);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("TAG", "Error deleting document", e);
+            }
+        });
     }
 
     @Override
