@@ -3,8 +3,12 @@ package com.example.androidfinalproject;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidfinalproject.Fragments.ListFragment;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
@@ -46,12 +50,13 @@ public class MyRecipesActivity extends AppCompatActivity {
     }
 
     private void logout(){
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.signOut();
-
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            public void onComplete(@NonNull Task<Void> task) {
+                // user is now signed out
+                startActivity(new Intent(MyRecipesActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
     }
 
     private void moveToAddRecipeActivity(){
