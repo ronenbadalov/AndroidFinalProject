@@ -209,9 +209,5 @@ public class NewRecipeActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        moveBackToMyRecipes();
-    }
+
 }

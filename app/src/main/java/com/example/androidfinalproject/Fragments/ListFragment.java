@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -47,7 +48,7 @@ public class ListFragment extends Fragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         list_LST_recipes.setLayoutManager(linearLayoutManager);
         db.collection("recipes")
-                .whereEqualTo("userId", firebaseAuth.getUid()).orderBy("createdAt")
+                .whereEqualTo("userId", firebaseAuth.getUid()).orderBy("createdAt", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

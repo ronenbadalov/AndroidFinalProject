@@ -73,4 +73,9 @@ public class MyRecipesActivity extends AppCompatActivity {
         listFragment = new ListFragment();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

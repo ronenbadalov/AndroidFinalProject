@@ -107,6 +107,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        moveBackToMyRecipes();
+        finish();
     }
 }

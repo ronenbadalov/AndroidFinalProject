@@ -104,14 +104,14 @@ public class Recipe {
     public String toString() {
         return "Recipe{" +
                 "name='" + name  + '\'' +
-                ", cookingTime=" + cookingTime +
-                ", servings=" + servings +
-                ", ingredients='" + ingredients  + '\'' +
-                ", preparationSteps='" + preparationSteps + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                ", imageName='" + imageName + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                ", createdAt='" + createdAt + '\'' +
+                "#, cookingTime=" + cookingTime +
+                "#, servings=" + servings +
+                "#, ingredients='" + ingredients  + '\'' +
+                "#, preparationSteps='" + preparationSteps + '\'' +
+                "#, imagePath='" + imagePath + '\'' +
+                "#, imageName='" + imageName + '\'' +
+                "#, timestamp='" + timestamp + '\'' +
+                "#, createdAt='" + createdAt + '\'' +
                 '}';
     }
 
@@ -122,7 +122,7 @@ public class Recipe {
         tempString = tempString.replace("'", "");
 
         // Split the string into parts
-        String[] parts = tempString.split(", ");
+        String[] parts = tempString.split("#, ");
 
         // Set each field using the parts
         for (String part : parts) {

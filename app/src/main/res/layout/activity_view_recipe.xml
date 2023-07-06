@@ -169,7 +169,6 @@
                 android:fontFamily="@font/sora"
                 android:inputType="textMultiLine"
                 android:letterSpacing="0.1"
-                android:minLines="3"
                 android:textSize="15sp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -186,7 +185,6 @@
                 android:id="@+id/viewRecipe_stepsEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minLines="3"
                 android:inputType="textMultiLine"
                 android:fontFamily="@font/sora"
                 android:letterSpacing="0.1"

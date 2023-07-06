@@ -36,7 +36,7 @@
             android:text="Chicken Burritos"
             android:fontFamily="@font/sora"
             android:letterSpacing="0.1"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_marginTop="7dp"
             android:textStyle="bold" />
